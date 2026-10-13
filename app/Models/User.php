@@ -14,13 +14,12 @@ use Illuminate\Notifications\Notifiable;
 #[Hidden(['password', 'remember_token'])]
 class User extends Authenticatable
 {
-    /** @use HasFactory<UserFactory> */
     use HasFactory, Notifiable;
 
     /**
      * Get the attributes that should be cast.
      *
-     * @return array<string, string>
+     * @return array
      */
     protected function casts(): array
     {
@@ -28,5 +27,17 @@ class User extends Authenticatable
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
         ];
+    }
+
+    // Relasi ke Forum Diskusi
+    public function postingan()
+    {
+        return $this->hasMany(Postingan::class, 'user_id');
+    }
+
+    // Relasi ke Hasil Kuis
+    public function hasilKuis()
+    {
+        return $this->hasMany(HasilKuis::class, 'user_id');
     }
 }
