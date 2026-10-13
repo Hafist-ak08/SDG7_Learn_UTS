@@ -3,36 +3,56 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
-use Database\Factories\UserFactory;
-use Illuminate\Database\Eloquent\Attributes\Fillable;
-use Illuminate\Database\Eloquent\Attributes\Hidden;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Laravel\Sanctum\HasApiTokens;
 
-#[Fillable(['name', 'email', 'password'])]
-#[Hidden(['password', 'remember_token'])]
 class User extends Authenticatable
 {
-    use HasFactory, Notifiable;
+    use HasApiTokens, HasFactory, Notifiable;
 
     /**
-     * Get the attributes that should be cast.
-     *
-     * @return array
+     * Kolom yang boleh diisi secara massal.
+     */
+    protected $fillable = [
+        'nama',
+        'email',
+        'password',
+        'pekerjaan',
+        'usia',
+        'role',
+    ];
+
+    /**
+     * Kolom yang disembunyikan dari serialisasi.
+     */
+    protected $hidden = [
+        'password',
+        'remember_token',
+    ];
+
+    /**
+     * Tipe casting kolom.
      */
     protected function casts(): array
     {
         return [
             'email_verified_at' => 'datetime',
-            'password' => 'hashed',
+            'password'          => 'hashed',
         ];
     }
 
-    // Relasi ke Forum Diskusi
+    // Relasi ke Forum Diskusi (postingan)
     public function postingan()
     {
         return $this->hasMany(Postingan::class, 'user_id');
+    }
+
+    // Relasi ke Forum Diskusi (balasan)
+    public function balasan()
+    {
+        return $this->hasMany(Balasan::class, 'user_id');
     }
 
     // Relasi ke Hasil Kuis
