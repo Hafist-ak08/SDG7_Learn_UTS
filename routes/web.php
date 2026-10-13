@@ -2,7 +2,6 @@
 
 use Illuminate\Support\Facades\Route;
 
-// Root route - welcome page
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::view('/', 'welcome');
+Route::view('/{path}', 'welcome')
+    ->where('path', '^(login|register|artikel|kuis|hasil-kuis|forum|profil|admin)(/.*)?$');
