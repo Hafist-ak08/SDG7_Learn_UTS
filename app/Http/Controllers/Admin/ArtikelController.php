@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
+use App\Http\Controllers\Controller;
 use App\Models\Artikel;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -15,7 +16,7 @@ use Illuminate\Support\Facades\Validator;
  *  PUT    /admin/artikel/{id}  — §11.2  KF-04
  *  DELETE /admin/artikel/{id}  — §11.3  KF-04
  */
-class AdminArtikelController extends Controller
+class ArtikelController extends Controller
 {
     // ─────────────────────────────────────────────
     // §11.1  POST /admin/artikel

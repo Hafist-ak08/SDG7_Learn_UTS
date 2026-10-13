@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
+use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -14,7 +15,7 @@ use Illuminate\Support\Facades\Validator;
  *  GET /admin/pengguna      — §14.1  (§2.2, DFD Data User)
  *  GET /admin/pengguna/{id} — §14.2  (§2.2, DFD Data User)
  */
-class AdminPenggunaController extends Controller
+class PenggunaController extends Controller
 {
     // ─────────────────────────────────────────────
     // §14.1  GET /admin/pengguna

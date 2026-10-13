@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Repositories;
+namespace App\Fetch;
 
 use App\Models\Artikel;
 use Illuminate\Pagination\LengthAwarePaginator;

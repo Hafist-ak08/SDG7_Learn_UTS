@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Repositories;
+namespace App\Fetch;
 
 use App\Models\HasilKuis;
 use App\Models\Kuis;
@@ -27,7 +27,7 @@ class KuisRepository
                 'skor_terbaik' => HasilKuis::query()
                     ->selectRaw('max(skor)')
                     ->whereColumn('hasil_kuis.kuis_id', 'kuis.id')
-                    ->where('pengguna_id', $penggunaId),
+                    ->where('user_id', $penggunaId),
             ]))
             ->when($q, fn ($query) => $query->where('judul', 'like', "%{$q}%"))
             ->latest()

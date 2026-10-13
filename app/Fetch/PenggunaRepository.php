@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Repositories;
+namespace App\Fetch;
 
 use App\Models\Balasan;
-use App\Models\Pengguna;
+use App\Models\User;
 use Illuminate\Pagination\LengthAwarePaginator;
 
 /** Fetching data pengguna (profil & pengelolaan oleh admin). Hanya membaca data. */
@@ -17,7 +17,7 @@ class PenggunaRepository
      */
     public function daftar(?string $q = null, ?string $role = null, int $limit = 20): LengthAwarePaginator
     {
-        return Pengguna::query()
+        return User::query()
             ->withCount(['hasilKuis', 'postingan'])
             ->when($q, fn ($query) => $query->where(
                 fn ($w) => $w->where('nama', 'like', "%{$q}%")->orWhere('email', 'like', "%{$q}%")
@@ -36,7 +36,7 @@ class PenggunaRepository
      */
     public function detail(int $id): array
     {
-        $pengguna = Pengguna::findOrFail($id);
+        $pengguna = User::findOrFail($id);
 
         return [
             'pengguna'  => $pengguna,
@@ -44,15 +44,15 @@ class PenggunaRepository
                 'jumlah_kuis_dikerjakan' => $pengguna->hasilKuis()->count(),
                 'rata_rata_persentase'   => round((float) $pengguna->hasilKuis()->avg('persentase'), 2),
                 'jumlah_postingan'       => $pengguna->postingan()->count(),
-                'jumlah_balasan'         => Balasan::where('pengguna_id', $pengguna->id)->count(),
+                'jumlah_balasan'         => Balasan::where('user_id', $pengguna->id)->count(),
             ],
             'hasil_terakhir' => $pengguna->hasilKuis()->latest()->limit(5)->get(),
         ];
     }
 
     /** Profil sendiri. Controller memanggil dengan auth()->id(). Query: findOrFail() */
-    public function profil(int $id): Pengguna
+    public function profil(int $id): User
     {
-        return Pengguna::findOrFail($id);
+        return User::findOrFail($id);
     }
 }

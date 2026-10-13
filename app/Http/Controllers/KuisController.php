@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Models\HasilKuis;
 use App\Models\Kuis;
-use App\Models\Tinjauan;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -132,7 +131,7 @@ class KuisController extends Controller
     // §8.3  POST /kuis/{id}/percobaan
     // Kirim jawaban, hitung skor, simpan HasilKuis + Tinjauan (snapshot)
     // ─────────────────────────────────────────────
-    public function percobaan(Request $request, int $id): JsonResponse
+    public function kerjakan(Request $request, int $id): JsonResponse
     {
         $kuis = Kuis::with(['pertanyaan.opsi'])->find($id);
 
@@ -202,7 +201,7 @@ class KuisController extends Controller
                 'persentase'        => $persentase,
                 'jumlah_benar'      => $jumlahBenar,
                 'jumlah_pertanyaan' => $kuis->pertanyaan->count(),
-                'tinjauan'          => json_encode($tinjauan),
+                'tinjauan'          => $tinjauan,
             ]);
 
             DB::commit();

@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
+use App\Http\Controllers\Controller;
 use App\Models\Balasan;
 use App\Models\Postingan;
 use Illuminate\Http\JsonResponse;
@@ -16,7 +17,7 @@ use Illuminate\Support\Facades\Validator;
  *  DELETE /admin/forum/postingan/{id}  — §13.2  ER Mengolah
  *  DELETE /admin/forum/balasan/{id}    — §13.3  ER Mengolah
  */
-class AdminForumController extends Controller
+class ForumController extends Controller
 {
     // ─────────────────────────────────────────────
     // §13.1  GET /admin/forum/postingan
@@ -79,7 +80,7 @@ class AdminForumController extends Controller
     // ─────────────────────────────────────────────
     // §13.2  DELETE /admin/forum/postingan/{id}
     // ─────────────────────────────────────────────
-    public function destroyPostingan(int $id): JsonResponse
+    public function hapusPostingan(int $id): JsonResponse
     {
         $postingan = Postingan::find($id);
 
@@ -95,7 +96,7 @@ class AdminForumController extends Controller
     // ─────────────────────────────────────────────
     // §13.3  DELETE /admin/forum/balasan/{id}
     // ─────────────────────────────────────────────
-    public function destroyBalasan(int $id): JsonResponse
+    public function hapusBalasan(int $id): JsonResponse
     {
         $balasan = Balasan::find($id);
 

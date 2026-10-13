@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
+use App\Http\Controllers\Controller;
 use App\Models\HasilKuis;
 use App\Models\Kuis;
 use App\Models\Opsi;
@@ -25,7 +26,7 @@ use Illuminate\Support\Facades\Validator;
  *  DELETE /admin/kuis/{id}/pertanyaan/{pertanyaan_id}  — §12.8  KF-06
  *  GET    /admin/kuis/{id}/hasil                       — §12.9  DFD 1.4.5
  */
-class AdminKuisController extends Controller
+class KuisController extends Controller
 {
     // ─────────────────────────────────────────────
     // §12.1  GET /admin/kuis
@@ -236,7 +237,7 @@ class AdminKuisController extends Controller
     // ─────────────────────────────────────────────
     // §12.6  POST /admin/kuis/{id}/pertanyaan
     // ─────────────────────────────────────────────
-    public function storePertanyaan(Request $request, int $id): JsonResponse
+    public function tambahPertanyaan(Request $request, int $id): JsonResponse
     {
         $kuis = Kuis::find($id);
         if (! $kuis) {
@@ -293,7 +294,7 @@ class AdminKuisController extends Controller
     // ─────────────────────────────────────────────
     // §12.7  PUT /admin/kuis/{id}/pertanyaan/{pertanyaan_id}
     // ─────────────────────────────────────────────
-    public function updatePertanyaan(Request $request, int $id, int $pertanyaan_id): JsonResponse
+    public function ubahPertanyaan(Request $request, int $id, int $pertanyaan_id): JsonResponse
     {
         $pertanyaan = Pertanyaan::where('kuis_id', $id)->find($pertanyaan_id);
         if (! $pertanyaan) {
@@ -353,7 +354,7 @@ class AdminKuisController extends Controller
     // ─────────────────────────────────────────────
     // §12.8  DELETE /admin/kuis/{id}/pertanyaan/{pertanyaan_id}
     // ─────────────────────────────────────────────
-    public function destroyPertanyaan(int $id, int $pertanyaan_id): JsonResponse
+    public function hapusPertanyaan(int $id, int $pertanyaan_id): JsonResponse
     {
         $pertanyaan = Pertanyaan::where('kuis_id', $id)->find($pertanyaan_id);
         if (! $pertanyaan) {
@@ -369,7 +370,7 @@ class AdminKuisController extends Controller
     // §12.9  GET /admin/kuis/{id}/hasil
     // sort: dikerjakan_pada (default -dikerjakan_pada), atau skor, -skor
     // ─────────────────────────────────────────────
-    public function indexHasil(Request $request, int $id): JsonResponse
+    public function hasil(Request $request, int $id): JsonResponse
     {
         $kuis = Kuis::find($id);
         if (! $kuis) {

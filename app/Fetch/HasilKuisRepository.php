@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Repositories;
+namespace App\Fetch;
 
 use App\Models\HasilKuis;
 use App\Models\Kuis;
@@ -17,7 +17,7 @@ class HasilKuisRepository
     public function riwayat(int $penggunaId, int $limit = 10): LengthAwarePaginator
     {
         return HasilKuis::query()
-            ->where('pengguna_id', $penggunaId)
+            ->where('user_id', $penggunaId)
             ->latest()
             ->paginate($limit);
     }
@@ -47,7 +47,7 @@ class HasilKuisRepository
         Kuis::findOrFail($kuisId); // 404 bila kuis tidak ada
 
         return HasilKuis::query()
-            ->with('pengguna:id,nama,pekerjaan,usia')
+            ->with('user:id,nama,pekerjaan,usia')
             ->where('kuis_id', $kuisId)
             ->when($sort === 'skor', fn ($q) => $q->orderByDesc('skor')->latest(),
                 fn ($q) => $q->latest())
@@ -61,7 +61,7 @@ class HasilKuisRepository
     public function skorTerbaikPerKuis(int $penggunaId): Collection
     {
         return HasilKuis::query()
-            ->where('pengguna_id', $penggunaId)
+            ->where('user_id', $penggunaId)
             ->selectRaw('kuis_id, max(skor) as terbaik')
             ->groupBy('kuis_id')
             ->pluck('terbaik', 'kuis_id');

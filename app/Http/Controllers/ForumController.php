@@ -112,7 +112,7 @@ class ForumController extends Controller
     // §10.4  GET /forum/postingan/{id}/balasan
     // sort: tanggal (default tanggal = terlama dulu)
     // ─────────────────────────────────────────────
-    public function indexBalasan(Request $request, int $id): JsonResponse
+    public function balasan(Request $request, int $id): JsonResponse
     {
         $postingan = Postingan::find($id);
         if (! $postingan) {
@@ -154,7 +154,7 @@ class ForumController extends Controller
     // ─────────────────────────────────────────────
     // §10.5  POST /forum/postingan/{id}/balasan
     // ─────────────────────────────────────────────
-    public function storeBalasan(Request $request, int $id): JsonResponse
+    public function balas(Request $request, int $id): JsonResponse
     {
         $postingan = Postingan::find($id);
         if (! $postingan) {

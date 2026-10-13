@@ -71,7 +71,7 @@ class ProfilController extends Controller
     // ─────────────────────────────────────────────
     // §6.3  PUT /profil/password
     // ─────────────────────────────────────────────
-    public function updatePassword(Request $request): JsonResponse
+    public function ubahPassword(Request $request): JsonResponse
     {
         $validator = Validator::make($request->all(), [
             'password_lama'          => 'required|string',
