@@ -79,7 +79,7 @@ class HasilKuisController extends Controller
             'jumlah_benar'      => $hasil->jumlah_benar,
             'jumlah_pertanyaan' => $hasil->jumlah_pertanyaan,
             'dikerjakan_pada'   => $hasil->created_at->toIso8601ZuluString(),
-            'tinjauan'          => json_decode($hasil->tinjauan, true),
+            'tinjauan'          => $hasil->tinjauan,
         ]);
     }
 

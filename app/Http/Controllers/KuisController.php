@@ -165,6 +165,7 @@ class KuisController extends Controller
             foreach ($kuis->pertanyaan->sortBy('urutan') as $pertanyaan) {
                 $opsiBenar  = $pertanyaan->opsi->firstWhere('benar', true);
                 $opsiDipilihId = $jawabanMap->get($pertanyaan->id);
+                $opsiDipilih = $opsiDipilihId !== null ? $pertanyaan->opsi->firstWhere('id', $opsiDipilihId) : null;
                 $benar      = $opsiDipilihId !== null && $opsiDipilihId === $opsiBenar?->id;
                 $poinDiperoleh = $benar ? $pertanyaan->poin : 0;
 
@@ -181,7 +182,9 @@ class KuisController extends Controller
                     'poin'           => $pertanyaan->poin,
                     'opsi'           => $pertanyaan->opsi->map(fn ($o) => ['id' => $o->id, 'teks' => $o->teks])->values()->toArray(),
                     'opsi_dipilih_id' => $opsiDipilihId,
+                    'opsi_dipilih'   => $opsiDipilih?->teks,
                     'opsi_benar_id'  => $opsiBenar?->id,
+                    'opsi_benar'     => $opsiBenar?->teks,
                     'benar'          => $benar,
                     'poin_diperoleh' => $poinDiperoleh,
                     'penjelasan'     => $pertanyaan->penjelasan,
